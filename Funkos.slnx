@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Funkos.Test/Funkos.Test.csproj" />
+  <Project Path="Funkos/Funkos.csproj" />
+</Solution>
