@@ -5,29 +5,30 @@ namespace Funkos.Repositories;
 public class FunkoRepository : IFunkoRepository
 {
 
-    private readonly List<Funko> funkos = new();
+    private List<Funko> _funkos = new();
+    private static long _nextId = 1;
     
     public List<Funko> GetAll()
     {
-        return funkos;
+        return _funkos.ToList();
     }
 
     public Funko? GetById(long id)
     {
-        return funkos.FirstOrDefault(f => f.Id == id);
+        return _funkos.FirstOrDefault(f => f.Id == id);
     }
 
     public Funko Create(Funko newFunko)
     {
         var funko = new Funko
         {
-            Id = newFunko.Id,
+            Id = _nextId++,
             Name = newFunko.Name,
             Precio = newFunko.Precio,
             Categoria = newFunko.Categoria,
-            CreateAt = newFunko.CreateAt
+            CreateAt = DateTime.UtcNow
         };
-        funkos.Add(funko);
+        _funkos.Add(funko);
         return funko;
     }
 
@@ -50,7 +51,7 @@ public class FunkoRepository : IFunkoRepository
         var funko = GetById(id);
         if (funko is null) return false;
 
-        funkos.Remove(funko);
+        _funkos.Remove(funko);
         return true;
     }
     

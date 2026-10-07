@@ -5,7 +5,7 @@ namespace Funkos.Mappers;
 
 public class FunkoMapper
 {
-    public static Funko? ToEntity(FunkosDtoRequest request)
+    public static Funko ToEntity(FunkosDtoRequest request)
     {
         return new Funko
         {

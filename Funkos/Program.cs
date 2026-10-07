@@ -1,16 +1,18 @@
 using System.Text.Json.Serialization;
-using Funkos.Routes;
+using Funkos.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.ConfigureHttpJsonOptions(options =>
-{
-    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+builder.Services.AddSingleton<IFunkoRepository, FunkoRepository>();
 var app = builder.Build();
 
-app.MapFunkosRoutes();   // Todas las rutas de productos
-
+app.MapControllers();
 app.Run();
 
