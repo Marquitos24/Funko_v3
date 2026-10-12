@@ -2,23 +2,25 @@
 using Funkos.Repositories;
 using Funkos.Dto;
 using Funkos.Mappers;
+using Funkos.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Funkos.Controller;
 
 [ApiController]
 [Route("api/[controller]")]
-public class FunkoController(IFunkoRepository repo) : ControllerBase
+public class FunkoController(IFunkoService service) : ControllerBase
 {
-    
+
     [HttpGet]
     public ActionResult<List<FunkosDtoResponse>> GetAll()
     {
-        List<Funko> funkos = repo.GetAll();
+       var resultado = service.GetAll();
 
         try
         {
-            List<FunkosDtoResponse> dtos = funkos.Select(f => FunkoMapper.ToDtoResponse(f)).ToList();
+            List<FunkosDtoResponse> dtos = resultado.Select(f => FunkoMapper.ToDtoResponse(f)).ToList();
 
             return Ok(dtos);
         }
@@ -29,13 +31,13 @@ public class FunkoController(IFunkoRepository repo) : ControllerBase
     }
     
     [HttpGet("{id:long}")]
-    public ActionResult<FunkosDtoResponse> GetById([FromRoute] long id)
+    public ActionResult<FunkosDtoResponse?> GetById([FromRoute] long id)
     {
         if(id <= 0) return BadRequest("No existe ese id");
         
         try
         {
-            Funko? funko = repo.GetById(id);
+            var funko = service.GetById(id);
             if (funko is null) return NotFound($"No existe el id {id} de funko");
             FunkosDtoResponse dto = FunkoMapper.ToDtoResponse(funko);
 
@@ -51,11 +53,10 @@ public class FunkoController(IFunkoRepository repo) : ControllerBase
     public ActionResult<FunkosDtoResponse> Create([FromBody] FunkosDtoRequest dto)
     {
         var request = FunkoMapper.ToEntity(dto);
-        if (request is null)  return NotFound("Los datos o la estructura no es correcta");
         
         try
         {
-            var creado = repo.Create(request);
+            var creado = service.Add(request);
         
             var response = FunkoMapper.ToDtoResponse(creado);
         
@@ -72,11 +73,10 @@ public class FunkoController(IFunkoRepository repo) : ControllerBase
     public ActionResult<FunkosDtoResponse> Update([FromRoute] long id, [FromBody] FunkosDtoRequest dto)
     {
         var funko = FunkoMapper.ToEntity(dto);
-        if (funko is null) return BadRequest("Los datos o la estructura no es correcta");
         
         try
         {
-            var actualizado = repo.Update(id, funko);
+            var actualizado = service.Update(id, funko);
 
             if (actualizado is null) return NotFound("No es posible actualizar el funko");
 
@@ -86,8 +86,7 @@ public class FunkoController(IFunkoRepository repo) : ControllerBase
         }
         catch (Exception)
         {
-            return StatusCode(500, $"Se ha producido un error al actualizar el Funko {id}.");
-
+            return StatusCode(500, $"Se ha producido un error al actualizar el Funko con id {id}.");
         }
     }
     
@@ -96,10 +95,10 @@ public class FunkoController(IFunkoRepository repo) : ControllerBase
     {
         try
         {
-            bool deleted = repo.Delete(id);
+            bool deleted = service.Delete(id);
 
             return deleted
-                ? Ok($"Funko con {id} eliminado")
+                ? Ok($"Funko con ID {id} eliminado")
                 : NotFound("NO se puede eliminar el funko");
         }
         catch (Exception)

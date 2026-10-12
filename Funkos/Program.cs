@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Funkos.Repositories;
+using Funkos.DI;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +10,7 @@ builder.Services.AddControllers()
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
-builder.Services.AddSingleton<IFunkoRepository, FunkoRepository>();
+builder.Services.AddApplicationServices(builder.Configuration);
 var app = builder.Build();
 
 app.MapControllers();

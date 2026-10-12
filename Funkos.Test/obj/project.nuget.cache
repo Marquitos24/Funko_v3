@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Vv6w32X3pfA=",
+  "dgSpecHash": "6btjO4M1D7M=",
   "success": true,
   "projectFilePath": "C:\\Users\\Marcos\\Documents\\Proyectos\\Back-end\\C#\\Funkos\\Funkos.Test\\Funkos.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Marcos\\.nuget\\packages\\castle.core\\5.2.1\\castle.core.5.2.1.nupkg.sha512",
     "C:\\Users\\Marcos\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
+    "C:\\Users\\Marcos\\.nuget\\packages\\csharpfunctionalextensions\\3.7.0\\csharpfunctionalextensions.3.7.0.nupkg.sha512",
     "C:\\Users\\Marcos\\.nuget\\packages\\fluentassertions\\8.11.0\\fluentassertions.8.11.0.nupkg.sha512",
     "C:\\Users\\Marcos\\.nuget\\packages\\microsoft.applicationinsights\\2.22.0\\microsoft.applicationinsights.2.22.0.nupkg.sha512",
     "C:\\Users\\Marcos\\.nuget\\packages\\microsoft.aspnetcore.mvc.testing\\10.0.12\\microsoft.aspnetcore.mvc.testing.10.0.12.nupkg.sha512",

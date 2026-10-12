@@ -7,6 +7,6 @@ public record Funko
     public required  string Precio  { get; set; }
     public required  Categoria Categoria { get; set; }
     public DateTime CreateAt {get; init; }
-    public DateTime? UpdateAt {get; set; }
+    public DateTime? UpdateAt {get; set; } 
     public DateTime? DeleteAt {get; init; }
 }
